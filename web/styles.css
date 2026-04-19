@@ -1,0 +1,1778 @@
+/* 参考 Miuix UI 的自定义样式 */
+
+/* 全局样式 */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* 自定义选中文本样式 */
+::selection {
+    background-color: rgba(var(--miuix-color-primary-rgb), 0.3);
+    color: var(--miuix-color-on-surface);
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    background-color: var(--miuix-color-surface);
+    color: var(--miuix-color-on-surface);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 颜色变量：使用 :root 确保在浅色/深色模式下都能正常生效 */
+:root {
+    --miuix-color-primary: #1976d2;
+    --miuix-color-primary-rgb: 25, 118, 210;
+    --miuix-color-on-primary: #ffffff;
+    --miuix-color-primary-container: #e3f2fd;
+    --miuix-color-on-primary-container: #0d47a1;
+    --miuix-color-secondary: #03a9f4;
+    --miuix-color-secondary-rgb: 3, 169, 244;
+    --miuix-color-on-secondary: #ffffff;
+    --miuix-color-secondary-container: #e1f5fe;
+    --miuix-color-on-secondary-container: #01579b;
+    --miuix-color-tertiary: #009688;
+    --miuix-color-tertiary-rgb: 0, 150, 136;
+    --miuix-color-on-tertiary: #ffffff;
+    --miuix-color-tertiary-container: #e0f2f1;
+    --miuix-color-on-tertiary-container: #004d40;
+    --miuix-color-surface: #ffffff;
+    --miuix-color-surface-rgb: 255, 255, 255;
+    --miuix-color-on-surface: #000000;
+    --miuix-color-surface-variant: #f5f5f5;
+    --miuix-color-on-surface-variant: #424242;
+    --miuix-color-outline: #e0e0e0;
+    --miuix-color-outline-variant: #f0f0f0;
+    --miuix-color-background: #fafafa;
+    --miuix-color-on-background: #212121;
+    --miuix-color-error: #b00020;
+    --miuix-color-on-error: #ffffff;
+    --miuix-color-success: #4caf50;
+    --miuix-color-on-success: #ffffff;
+    --miuix-color-warning: #ff9800;
+    --miuix-color-on-warning: #ffffff;
+    --miuix-color-info: #2196f3;
+    --miuix-color-on-info: #ffffff;
+}
+
+/* 背景遮罩层 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(var(--miuix-color-surface-rgb), 0.75);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.miuix-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 顶栏品牌区域 */
+.miuix-topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 品牌按钮（汉堡菜单 + 标题合并） */
+.miuix-brand-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    color: var(--miuix-color-on-surface);
+}
+
+.miuix-brand-button:hover {
+    background-color: rgba(var(--miuix-color-primary-rgb), 0.1);
+}
+
+.miuix-brand-button:active {
+    transform: scale(0.97);
+}
+
+.miuix-brand-button .menu-icon {
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.3s ease;
+}
+
+.miuix-brand-button:hover .menu-icon {
+    opacity: 1;
+}
+
+/* 侧边栏收起时旋转汉堡菜单图标 */
+.sidebar-collapsed .miuix-brand-button .menu-icon,
+.miuix-sidebar.collapsed~.miuix-topbar .menu-icon {
+    transform: rotate(90deg);
+}
+
+.miuix-brand-button .brand-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+/* 顶栏标题样式 */
+.miuix-topbar h1,
+.miuix-topbar-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin: 0;
+    color: var(--miuix-color-on-surface);
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.miuix-topbar-brand #github-btn {
+    color: var(--miuix-color-on-surface-variant);
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.miuix-topbar-brand #github-btn:hover {
+    opacity: 1;
+    color: var(--miuix-color-on-surface);
+}
+
+.miuix-topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 顶部导航栏 */
+.miuix-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: 56px;
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.6);
+    color: var(--miuix-color-on-surface);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* 搜索框 */
+.miuix-search {
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    border-radius: 20px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 400px;
+    margin: 0 16px;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 确保在浅色模式下搜索框也有正确的样式 */
+.miuix-search:focus-within {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: var(--miuix-color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--miuix-color-primary-rgb, 103, 80, 164), 0.2);
+    outline: none;
+}
+
+/* 为模态框添加模糊效果 */
+.miuix-modal {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.miuix-modal-dialog {
+    background-color: var(--miuix-color-surface);
+    border: 1px solid var(--miuix-color-outline);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.miuix-topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.miuix-search {
+    display: flex;
+    align-items: center;
+    background-color: var(--miuix-color-surface-variant);
+    border-radius: 20px;
+    padding: 4px 12px;
+    width: 240px;
+    transition: width 0.3s ease, background-color 0.2s ease;
+}
+
+.miuix-search:focus-within {
+    background-color: var(--miuix-color-surface-variant);
+    width: 280px;
+}
+
+.miuix-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--miuix-color-on-surface);
+    padding: 8px 8px;
+    outline: none;
+    font-size: 14px;
+}
+
+.miuix-search-input::placeholder {
+    color: var(--miuix-color-on-surface-variant);
+}
+
+.miuix-search-input:focus {
+    outline: none;
+}
+
+.miuix-search:focus-within {
+    border-color: var(--miuix-color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--miuix-color-primary-rgb), 0.2);
+}
+
+.miuix-icon-button {
+    background: transparent;
+    border: none;
+    color: var(--miuix-color-on-surface);
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.miuix-icon-button:hover {
+    background-color: var(--miuix-color-surface-variant);
+    transform: scale(1.05);
+}
+
+.miuix-icon-button:active {
+    transform: scale(0.95);
+}
+
+/* 主要内容区域 */
+.miuix-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    height: calc(100vh - 56px);
+    /* 减去顶栏高度 */
+}
+
+/* 侧边栏 */
+.miuix-sidebar {
+    width: 280px;
+    height: 100%;
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-right: 1px solid rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.1);
+    overflow-y: auto;
+    padding: 16px 0;
+    flex-shrink: 0;
+    transition: width 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+}
+
+/* 自定义滚动条 */
+.miuix-sidebar::-webkit-scrollbar,
+.miuix-main::-webkit-scrollbar {
+    width: 6px;
+}
+
+.miuix-sidebar::-webkit-scrollbar-track,
+.miuix-main::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.miuix-sidebar::-webkit-scrollbar-thumb,
+.miuix-main::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--miuix-color-on-surface-rgb, 0, 0, 0), 0.2);
+    border-radius: 3px;
+}
+
+.miuix-sidebar::-webkit-scrollbar-thumb:hover,
+.miuix-main::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(var(--miuix-color-on-surface-rgb, 0, 0, 0), 0.3);
+}
+
+/* 侧边栏折叠状态 */
+.miuix-sidebar.collapsed,
+html.sidebar-collapsed .miuix-sidebar {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+    border-right: none;
+}
+
+.miuix-card {
+    margin: 0 16px 16px;
+    background-color: rgba(var(--miuix-color-surface-variant-rgb, 255, 255, 255), 0.6);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.miuix-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.miuix-card-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--miuix-color-outline-variant);
+}
+
+.miuix-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--miuix-color-on-surface);
+}
+
+.miuix-card-content {
+    padding: 8px 16px 16px;
+}
+
+.miuix-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.miuix-list-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    cursor: pointer;
+    border-radius: 12px;
+    margin-bottom: 4px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.miuix-list-item:hover {
+    background-color: var(--miuix-color-surface);
+    transform: translateX(2px);
+}
+
+.miuix-list-item.active {
+    background-color: var(--miuix-color-primary-container);
+    color: var(--miuix-color-on-primary-container);
+}
+
+.miuix-list-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background-color: var(--miuix-color-primary);
+    border-radius: 0 4px 4px 0;
+}
+
+.miuix-list-item-text {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 超现代圆润排序选择框样式 */
+.miuix-select {
+    width: 100%;
+    padding: 12px 45px 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    color: var(--miuix-color-on-surface);
+    background-color: var(--miuix-color-surface);
+    border: 1.5px solid var(--miuix-color-outline);
+    border-radius: 18px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 20px;
+}
+
+.miuix-select:hover {
+    border-color: var(--miuix-color-primary);
+    background-color: var(--miuix-color-surface-variant);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+.miuix-select:focus {
+    border-color: var(--miuix-color-primary);
+    background-color: var(--miuix-color-surface);
+    box-shadow: 0 0 0 4px rgba(var(--miuix-color-primary-rgb), 0.2);
+    transform: translateY(-1px);
+}
+
+.miuix-select:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.miuix-select option {
+    background-color: var(--miuix-color-surface);
+    color: var(--miuix-color-on-surface);
+    font-family: inherit;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.miuix-select option:hover {
+    background-color: var(--miuix-color-primary-container);
+    color: var(--miuix-color-on-primary-container);
+}
+
+.miuix-select option:checked {
+    background-color: var(--miuix-color-primary);
+    color: var(--miuix-color-on-primary);
+    font-weight: 600;
+}
+
+.miuix-select option:disabled {
+    background-color: var(--miuix-color-surface-variant);
+    color: var(--miuix-color-on-surface-variant);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 主内容区域 */
+.miuix-main {
+    flex: 1;
+    padding: 16px 24px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.miuix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+}
+
+/* 应用卡片 */
+.app-card {
+    background-color: var(--miuix-color-surface);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid var(--miuix-color-outline-variant);
+}
+
+.app-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    border-color: var(--miuix-color-primary);
+}
+
+.app-card:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* 应用来源标识 */
+.app-source-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.app-source-badge:hover {
+    transform: scale(1.05);
+}
+
+.app-source-badge.store-2fstore {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.app-source-badge.store-fndepot {
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
+    color: white;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.app-card-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(var(--miuix-color-surface-variant-rgb, 245, 245, 245), 0.8), rgba(var(--miuix-color-surface-rgb), 0.6));
+    border-bottom: 1px solid rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.08);
+}
+
+.app-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    position: relative;
+}
+
+.app-icon:has(> img) {
+    background: none;
+}
+
+.app-icon:not(:has(> img)),
+.app-icon > .img-placeholder {
+    background: linear-gradient(135deg, var(--miuix-color-primary-container), var(--miuix-color-primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    font-size: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(var(--miuix-color-primary-rgb), 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-card:hover .app-icon {
+    transform: scale(1.05);
+}
+
+.app-card:hover .app-icon:not(:has(> img)) {
+    box-shadow: 0 6px 16px rgba(var(--miuix-color-primary-rgb), 0.35);
+}
+
+.app-info {
+    flex: 1;
+}
+
+.app-name {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 4px;
+    color: var(--miuix-color-on-surface);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.app-author {
+    color: var(--miuix-color-on-surface-variant);
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 6px;
+    background: linear-gradient(135deg,
+            rgba(var(--miuix-color-primary-rgb), 0.06) 0%,
+            rgba(var(--miuix-color-primary-rgb), 0.02) 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(var(--miuix-color-primary-rgb), 0.1);
+    margin-top: 4px;
+}
+
+.app-author::before {
+    content: '👤';
+    font-size: 12px;
+}
+
+/* 开发者链接样式 */
+.author-link {
+    color: var(--miuix-color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.author-link::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: linear-gradient(90deg,
+            var(--miuix-color-primary) 0%,
+            rgba(var(--miuix-color-primary-rgb), 0.5) 100%);
+    border-radius: 1px;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.author-link:hover {
+    color: var(--miuix-color-primary);
+    filter: brightness(1.1);
+}
+
+.author-link:hover::after {
+    width: 100%;
+}
+
+.author-link:active {
+    transform: scale(0.98);
+}
+
+/* 非链接开发者名称 */
+.app-author span:not(.author-link) {
+    font-weight: 500;
+    color: var(--miuix-color-on-surface);
+}
+
+.app-card-body {
+    padding: 16px;
+}
+
+.app-description {
+    color: var(--miuix-color-on-surface-variant);
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.app-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--miuix-color-on-surface-variant);
+    font-size: 12px;
+    font-weight: 500;
+    padding-top: 12px;
+    border-top: 1px solid rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.06);
+}
+
+.app-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 6px;
+    background-color: rgba(var(--miuix-color-surface-variant-rgb, 245, 245, 245), 0.6);
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.app-meta span:hover {
+    background-color: rgba(var(--miuix-color-primary-rgb), 0.1);
+}
+
+/* 应用详情 */
+.app-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+.app-detail-container {
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.4);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 10px 16px;
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: var(--miuix-color-on-surface);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.7);
+    transform: translateX(-4px);
+}
+
+.app-detail-header {
+    display: flex;
+    align-items: center;
+    padding: 32px;
+    background: linear-gradient(135deg, rgba(var(--miuix-color-surface-variant-rgb, 255, 255, 255), 0.4), rgba(var(--miuix-color-primary-rgb), 0.05));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0;
+}
+
+.app-detail-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    margin-right: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    font-size: 40px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.app-detail-icon:has(> img) {
+    background: none;
+}
+
+.app-detail-icon:not(:has(> img)),
+.app-detail-icon > .img-placeholder {
+    background: linear-gradient(135deg, var(--miuix-color-primary-container), var(--miuix-color-primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(var(--miuix-color-primary-rgb), 0.3);
+}
+
+.app-detail-icon:hover {
+    transform: scale(1.03);
+}
+
+.app-detail-icon:hover:not(:has(> img)) {
+    box-shadow: 0 12px 32px rgba(var(--miuix-color-primary-rgb), 0.4);
+}
+
+.app-detail-icon img {
+    transition: transform 0.3s ease;
+}
+
+.app-detail-icon:hover img {
+    transform: scale(1.05);
+}
+
+.app-detail-info {
+    flex: 1;
+}
+
+.app-detail-name {
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: var(--miuix-color-on-surface);
+}
+
+.app-detail-author {
+    color: var(--miuix-color-on-surface-variant);
+    margin-bottom: 16px;
+    font-size: 15px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px 8px 10px;
+    background: linear-gradient(135deg,
+            rgba(var(--miuix-color-primary-rgb), 0.08) 0%,
+            rgba(var(--miuix-color-primary-rgb), 0.03) 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(var(--miuix-color-primary-rgb), 0.12);
+    backdrop-filter: blur(8px);
+}
+
+.app-detail-author::before {
+    content: '👤';
+    font-size: 14px;
+}
+
+.app-detail-author .author-link {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.app-detail-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--miuix-color-on-surface-variant);
+    font-size: 14px;
+}
+
+.app-detail-stats span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    padding: 6px 12px;
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.5);
+    border-radius: 20px;
+    border: 1px solid rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.1);
+    transition: all 0.2s ease;
+}
+
+.app-detail-stats span:hover {
+    background-color: rgba(var(--miuix-color-primary-rgb), 0.1);
+    border-color: rgba(var(--miuix-color-primary-rgb), 0.3);
+}
+
+.app-detail-description {
+    margin: 0;
+    padding: 24px;
+    line-height: 1.8;
+    color: var(--miuix-color-on-surface);
+    font-size: 16px;
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.2);
+}
+
+.app-detail-actions {
+    display: flex;
+    gap: 16px;
+    margin: 0;
+    padding: 20px 24px;
+    background-color: rgba(var(--miuix-color-surface-variant-rgb, 255, 255, 255), 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.download-btn,
+.repo-btn {
+    padding: 12px 28px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.download-btn {
+    background-color: rgba(var(--miuix-color-primary-rgb), 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--miuix-color-on-primary);
+    box-shadow: 0 2px 8px rgba(var(--miuix-color-primary-rgb), 0.3);
+}
+
+.download-btn:hover {
+    background-color: rgba(var(--miuix-color-primary-rgb), 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--miuix-color-primary-rgb), 0.4);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(var(--miuix-color-primary-rgb), 0.3);
+}
+
+.repo-btn {
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--miuix-color-primary);
+    border: 1px solid rgba(var(--miuix-color-primary-rgb), 0.5);
+}
+
+.repo-btn:hover {
+    background-color: rgba(var(--miuix-color-primary-rgb), 0.15);
+    border-color: var(--miuix-color-primary);
+    transform: translateY(-2px);
+}
+
+.repo-btn:active {
+    transform: translateY(0);
+}
+
+/* 截图展示区域样式 */
+.app-screenshots {
+    margin: 0;
+    padding: 24px;
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-screenshots h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--miuix-color-on-surface);
+}
+
+.screenshot-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.screenshot {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 1px solid var(--miuix-color-outline-variant);
+}
+
+.screenshot:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.app-last-update {
+    margin: 0;
+    padding: 16px 24px;
+    background-color: rgba(var(--miuix-color-surface-variant-rgb, 255, 255, 255), 0.2);
+    color: var(--miuix-color-on-surface-variant);
+    font-size: 14px;
+    text-align: right;
+}
+
+.back-btn {
+    margin: 16px 24px 0;
+}
+
+/* 底部导航栏 */
+.miuix-bottombar {
+    display: flex;
+    background-color: var(--miuix-color-surface-variant);
+    border-top: 1px solid var(--miuix-color-outline);
+    padding: 8px 0;
+}
+
+.miuix-bottombar-item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.miuix-bottombar-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--miuix-color-on-surface-variant);
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 12px;
+    transition: background-color 0.2s;
+}
+
+.miuix-bottombar-link:hover {
+    background-color: var(--miuix-color-surface);
+}
+
+.miuix-bottombar-link svg {
+    margin-bottom: 4px;
+}
+
+/* 模态框 */
+.miuix-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.miuix-modal:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+}
+
+.miuix-modal-dialog {
+    background: rgba(var(--miuix-color-surface-rgb), 0.85);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90%;
+    overflow: hidden;
+    box-shadow:
+        0 24px 48px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    border: 1px solid rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.1);
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.miuix-modal:not(.hidden) .miuix-modal-dialog {
+    transform: scale(1);
+}
+
+.miuix-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.08);
+    background: linear-gradient(180deg,
+            rgba(var(--miuix-color-surface-rgb), 0.5) 0%,
+            transparent 100%);
+}
+
+.miuix-modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.miuix-modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--miuix-color-on-surface-variant);
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.miuix-modal-close:hover {
+    background-color: var(--miuix-color-surface-variant);
+}
+
+.miuix-modal-body {
+    padding: 20px;
+}
+
+/* 提交应用选项样式 */
+.submit-option {
+    background: linear-gradient(135deg,
+            rgba(var(--miuix-color-primary-rgb), 0.06) 0%,
+            rgba(var(--miuix-color-primary-rgb), 0.02) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 16px 0;
+    border: 1px solid rgba(var(--miuix-color-primary-rgb), 0.12);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.06),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(var(--miuix-color-primary-rgb), 0.3) 50%,
+            transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.submit-option:hover {
+    background: linear-gradient(135deg,
+            rgba(var(--miuix-color-primary-rgb), 0.1) 0%,
+            rgba(var(--miuix-color-primary-rgb), 0.04) 100%);
+    border-color: rgba(var(--miuix-color-primary-rgb), 0.2);
+    box-shadow:
+        0 8px 24px rgba(var(--miuix-color-primary-rgb), 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    transform: translateY(-2px);
+}
+
+.submit-option:hover::before {
+    opacity: 1;
+}
+
+.submit-option:active {
+    transform: translateY(0);
+}
+
+.submit-option h4 {
+    margin: 0 0 10px 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--miuix-color-on-surface);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.submit-option p {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--miuix-color-on-surface-variant);
+}
+
+.submit-option a.miuix-button {
+    width: 100%;
+    padding: 12px 20px;
+    font-weight: 600;
+    border-radius: 12px;
+}
+
+.miuix-button-outline {
+    background: linear-gradient(135deg,
+            rgba(var(--miuix-color-primary-rgb), 0.08) 0%,
+            rgba(var(--miuix-color-primary-rgb), 0.04) 100%);
+    border: 1.5px solid rgba(var(--miuix-color-primary-rgb), 0.4);
+    color: var(--miuix-color-primary);
+    backdrop-filter: blur(8px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.miuix-button-outline:hover {
+    background: linear-gradient(135deg,
+            rgba(var(--miuix-color-primary-rgb), 0.15) 0%,
+            rgba(var(--miuix-color-primary-rgb), 0.1) 100%);
+    border-color: var(--miuix-color-primary);
+    box-shadow: 0 4px 12px rgba(var(--miuix-color-primary-rgb), 0.2);
+    transform: translateY(-1px);
+}
+
+.miuix-button-outline:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.miuix-code-block {
+    background-color: var(--miuix-color-surface-variant);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+    overflow-x: auto;
+    border: 1px solid var(--miuix-color-outline-variant);
+}
+
+.miuix-code-block pre {
+    margin: 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    color: var(--miuix-color-on-surface);
+    line-height: 1.5;
+}
+
+.miuix-modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--miuix-color-outline);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.miuix-button {
+    padding: 12px 28px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.miuix-button-primary {
+    background-color: var(--miuix-color-primary);
+    color: var(--miuix-color-on-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.miuix-button-primary:hover {
+    background-color: var(--miuix-color-primary);
+    filter: brightness(0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.miuix-button-text {
+    background-color: transparent;
+    color: var(--miuix-color-primary);
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.miuix-button-text:hover {
+    background-color: rgba(var(--miuix-color-primary-rgb), 0.1);
+    transform: translateY(-1px);
+}
+
+.miuix-button-text:active {
+    transform: translateY(0);
+}
+
+.miuix-button-text svg {
+    transition: transform 0.2s ease;
+}
+
+.miuix-button-text:hover svg {
+    transform: translateX(-3px);
+}
+
+/* 工具类 */
+.hidden {
+    display: none !important;
+}
+
+/* 加载动画 */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(var(--miuix-color-primary-rgb), 0.3);
+    border-top: 4px solid var(--miuix-color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 顶栏按钮样式 */
+.miuix-topbar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--miuix-color-on-surface);
+    padding: 8px 16px;
+    margin-left: 8px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.miuix-topbar-button:hover {
+    background-color: var(--miuix-color-surface-variant);
+    transform: translateY(-1px);
+}
+
+.miuix-topbar-button:active {
+    transform: translateY(0);
+}
+
+.miuix-topbar-button svg {
+    margin-right: 6px;
+}
+
+/* 表单帮助文本 */
+.miuix-form-help {
+    font-size: 12px;
+    color: var(--miuix-color-on-surface-variant);
+    margin-top: 8px;
+}
+
+/* 表单字段 */
+.miuix-form-field {
+    margin-bottom: 16px;
+}
+
+.miuix-form-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--miuix-color-on-surface);
+}
+
+.miuix-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid var(--miuix-color-outline);
+    border-radius: 8px;
+    background-color: var(--miuix-color-surface);
+    color: var(--miuix-color-on-surface);
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.miuix-input:focus {
+    outline: none;
+    border-color: var(--miuix-color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--miuix-color-primary-rgb), 0.2);
+}
+
+/* 应用统计样式 */
+.app-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--miuix-color-outline-variant);
+}
+
+#app-count {
+    font-size: 14px;
+    color: var(--miuix-color-on-surface-variant);
+}
+
+/* 骨架屏样式 */
+.skeleton-card {
+    background-color: var(--miuix-color-surface-variant);
+    border-radius: 16px;
+    padding: 16px;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background-color: var(--miuix-color-outline-variant);
+}
+
+.skeleton-text {
+    height: 16px;
+    border-radius: 4px;
+    background-color: var(--miuix-color-outline-variant);
+    margin: 8px 0;
+}
+
+.skeleton-text.short {
+    width: 60%;
+}
+
+.skeleton-text.medium {
+    width: 80%;
+}
+
+@keyframes skeleton-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* 空状态样式 */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 24px;
+    text-align: center;
+}
+
+.empty-state .empty-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 24px;
+    color: var(--miuix-color-on-surface-variant);
+    opacity: 0.5;
+}
+
+.empty-state .empty-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--miuix-color-on-surface);
+    margin-bottom: 8px;
+}
+
+.empty-state .empty-desc {
+    font-size: 14px;
+    color: var(--miuix-color-on-surface-variant);
+}
+
+/* 图片加载占位/失败显示 */
+.img-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--miuix-color-primary), var(--miuix-color-primary-variant, #1976D2));
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    border-radius: 12px;
+}
+
+.app-detail-icon .img-placeholder {
+    font-size: 36px;
+    border-radius: 16px;
+}
+
+/* ============ 页脚样式 ============ */
+.site-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-disclaimer {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--miuix-color-on-surface-variant);
+    padding: 10px 20px;
+    background: linear-gradient(135deg,
+            rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.04) 0%,
+            rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.02) 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.06);
+    backdrop-filter: blur(8px);
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.footer-disclaimer:hover {
+    opacity: 1;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 32px 0 16px;
+    gap: 8px;
+    padding: 8px;
+}
+
+.page-btn {
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(var(--miuix-color-surface-variant-rgb, 255, 255, 255), 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(var(--miuix-color-outline-rgb, 0, 0, 0), 0.05);
+    border-radius: 12px;
+    padding: 0 12px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--miuix-color-on-surface);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.page-btn:hover {
+    background-color: rgba(var(--miuix-color-surface-rgb), 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--miuix-color-primary-rgb), 0.15);
+    color: var(--miuix-color-primary);
+    border-color: rgba(var(--miuix-color-primary-rgb), 0.2);
+}
+
+.page-btn:active {
+    transform: translateY(0) scale(0.96);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-btn.active {
+    background-color: var(--miuix-color-primary);
+    color: var(--miuix-color-on-primary);
+    border-color: var(--miuix-color-primary);
+    box-shadow: 0 4px 12px rgba(var(--miuix-color-primary-rgb), 0.4);
+    font-weight: 600;
+    transform: scale(1.05);
+}
+
+.page-btn.prev-btn,
+.page-btn.next-btn {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 0 8px;
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-ellipsis {
+    padding: 6px 12px;
+    color: var(--miuix-color-on-surface);
+    user-select: none;
+    pointer-events: none;
+}
+
+/* 深色模式 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --miuix-color-primary: #90caf9;
+        --miuix-color-primary-rgb: 144, 202, 249;
+        --miuix-color-on-primary: #0d47a1;
+        --miuix-color-primary-container: #1565c0;
+        --miuix-color-on-primary-container: #e3f2fd;
+        --miuix-color-secondary: #81d4fa;
+        --miuix-color-secondary-rgb: 129, 212, 250;
+        --miuix-color-on-secondary: #01579b;
+        --miuix-color-secondary-container: #0288d1;
+        --miuix-color-on-secondary-container: #e1f5fe;
+        --miuix-color-tertiary: #80cbc4;
+        --miuix-color-tertiary-rgb: 128, 203, 196;
+        --miuix-color-on-tertiary: #004d40;
+        --miuix-color-tertiary-container: #00796b;
+        --miuix-color-on-tertiary-container: #e0f2f1;
+        --miuix-color-surface: #121212;
+        --miuix-color-surface-rgb: 18, 18, 18;
+        --miuix-color-on-surface: #ffffff;
+        --miuix-color-surface-variant: #1e1e1e;
+        --miuix-color-on-surface-variant: #bdbdbd;
+        --miuix-color-outline: #424242;
+        --miuix-color-outline-variant: #333333;
+        --miuix-color-background: #121212;
+        --miuix-color-on-background: #ffffff;
+        --miuix-color-error: #ef5350;
+        --miuix-color-on-error: #ffffff;
+        --miuix-color-success: #66bb6a;
+        --miuix-color-on-success: #ffffff;
+        --miuix-color-warning: #ffb74d;
+        --miuix-color-on-warning: #ffffff;
+        --miuix-color-info: #64b5f6;
+        --miuix-color-on-info: #ffffff;
+    }
+
+    body::before {
+        background: rgba(var(--miuix-color-surface-rgb), 0.8);
+    }
+
+    .miuix-topbar {
+        background-color: rgba(var(--miuix-color-surface-rgb), 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(var(--miuix-color-on-surface-rgb), 0.08);
+    }
+
+    .miuix-sidebar {
+        background-color: rgba(var(--miuix-color-surface-rgb), 0.65);
+        border-right: 1px solid rgba(var(--miuix-color-on-surface-rgb), 0.06);
+    }
+
+    .miuix-card {
+        background-color: rgba(var(--miuix-color-surface-variant-rgb), 0.5);
+        border: 1px solid rgba(var(--miuix-color-on-surface-rgb), 0.08);
+    }
+
+    /* 深色模式下的应用卡片优化 */
+    .app-card {
+        background-color: rgba(var(--miuix-color-surface-rgb), 0.9);
+        border-color: rgba(var(--miuix-color-on-surface-rgb), 0.12);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    .app-card-header {
+        background: linear-gradient(135deg,
+                rgba(var(--miuix-color-surface-variant-rgb, 30, 30, 30), 0.9),
+                rgba(var(--miuix-color-surface-rgb), 0.7));
+        border-bottom-color: rgba(var(--miuix-color-on-surface-rgb), 0.12);
+    }
+
+    .app-meta span {
+        background-color: rgba(var(--miuix-color-surface-variant-rgb, 30, 30, 30), 0.8);
+    }
+
+    .miuix-search {
+        background-color: rgba(var(--miuix-color-on-surface-rgb), 0.08);
+        backdrop-filter: blur(12px) saturate(150%);
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
+        border: 1px solid rgba(var(--miuix-color-on-surface-rgb), 0.1);
+    }
+
+    .miuix-search:focus-within {
+        background-color: rgba(var(--miuix-color-on-surface-rgb), 0.12);
+        border-color: rgba(var(--miuix-color-on-surface-rgb), 0.2);
+    }
+
+    .miuix-select option:hover {
+        background-color: rgba(103, 80, 164, 0.3);
+        color: #e8def8;
+    }
+
+    .miuix-select option:checked {
+        background-color: #6750a4;
+        color: #ffffff;
+    }
+
+    .miuix-select option:disabled {
+        background-color: #333333;
+        color: #888888;
+    }
+
+    .miuix-topbar-button:hover {
+        background-color: rgba(var(--miuix-color-on-surface-rgb), 0.15);
+    }
+
+    .miuix-icon-button:hover {
+        background-color: rgba(var(--miuix-color-on-surface-rgb), 0.15);
+    }
+
+    /* 深色模式下应用详情卡片整体加深，保证可读性 */
+    .app-detail-container {
+        background-color: rgba(var(--miuix-color-surface-rgb), 0.96);
+        border-color: rgba(var(--miuix-color-on-surface-rgb), 0.16);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75);
+    }
+
+    .app-detail-header {
+        background: linear-gradient(135deg,
+                rgba(var(--miuix-color-surface-variant-rgb, 30, 30, 30), 0.95),
+                rgba(var(--miuix-color-surface-rgb), 0.9));
+        border-color: rgba(var(--miuix-color-on-surface-rgb), 0.16);
+    }
+
+    .app-detail-description {
+        background-color: rgba(var(--miuix-color-surface-rgb), 0.95);
+    }
+
+    .app-detail-actions {
+        background-color: rgba(var(--miuix-color-surface-variant-rgb, 30, 30, 30), 0.95);
+        border-color: rgba(var(--miuix-color-on-surface-rgb), 0.16);
+    }
+
+    .app-screenshots {
+        background-color: rgba(var(--miuix-color-surface-rgb), 0.9);
+    }
+
+    .app-last-update {
+        background-color: rgba(var(--miuix-color-surface-variant-rgb, 30, 30, 30), 0.9);
+    }
+
+    .back-btn {
+        background-color: rgba(var(--miuix-color-on-surface-rgb), 0.1);
+        border-color: rgba(var(--miuix-color-on-surface-rgb), 0.1);
+    }
+
+    .back-btn:hover {
+        background-color: rgba(var(--miuix-color-on-surface-rgb), 0.15);
+    }
+
+    .repo-btn {
+        background-color: rgba(var(--miuix-color-on-surface-rgb), 0.1);
+    }
+
+    .footer-disclaimer {
+        background: linear-gradient(135deg,
+                rgba(var(--miuix-color-on-surface-rgb), 0.04) 0%,
+                rgba(var(--miuix-color-on-surface-rgb), 0.02) 100%);
+        border-color: rgba(var(--miuix-color-on-surface-rgb), 0.06);
+    }
+
+    .miuix-brand-button {
+        color: var(--miuix-color-on-surface);
+    }
+
+    ::selection {
+        background-color: rgba(var(--miuix-color-primary-rgb), 0.3);
+        color: var(--miuix-color-on-surface);
+    }
+}
