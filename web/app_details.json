@@ -1,0 +1,37 @@
+{
+  "apps": [
+    {
+      "id": "lunatv",
+      "name": "LunaTV",
+      "repository": "https://github.com/yuexps/lunatv-fnos",
+      "description": "是一个开箱即用的、跨平台的影视聚合播放器。它基于 Next.js 14 + Tailwind CSS + TypeScript 构建，支持多资源搜索、在线播放、收藏同步、播放记录、云端存储，让你可以随时随地畅享海量免费影视内容。",
+      "version": "1.0.0",
+      "iconUrl": "https://raw.githubusercontent.com/yuexps/lunatv-fnos/main/ICON_256.PNG",
+      "downloadUrl": "https://github.com/yuexps/lunatv-fnos/releases/download/1.0.0/lunatv.fpk",
+      "screenshots": [],
+      "author": "yuexps",
+      "stars": 2,
+      "forks": 0,
+      "category": "utility",
+      "lastUpdate": "2025-12-01T05:32:33Z",
+      "platform": "x86"
+    },
+    {
+      "id": "2fmusic",
+      "name": "2FMusic",
+      "repository": "https://github.com/yuexps/2FMusic",
+      "description": "<b>2FMusic</b> 简洁的本地音乐播放器。\n<ul>\n    <li><b>本地音乐库</b>：自动扫描，支持识别提取 ID3 内嵌元数据 或 网络自动获取歌词、封面。</li>\n    <li><b>Web 播放器</b>：支持歌词滚动，播放器页自动取色。</li>\n    <li><b>目录管理</b>：支持将服务器任意文件夹添加到音乐库。</li>\n    <li><b>网易云集成</b>：支持搜索、下载、链接解析及扫码登录。</li>\n    <li><b>音频预览</b>：支持文件管理器双击预览播放（需安装2FMusic Preview）。</li>\n    <li><b>Android</b>：提供专属原生 Android APP，流畅体验（也许吧）。</li>\n</ul>",
+      "version": "0.1.0",
+      "iconUrl": "https://raw.githubusercontent.com/yuexps/2FMusic/main/ICON_256.PNG",
+      "downloadUrl": "https://github.com/yuexps/2FMusic/releases/download/v0.1.0-3fba165-pre/fnnas.2fmusic-0.1.0-3fba165-amd64.fpk",
+      "screenshots": [],
+      "author": "yuexps",
+      "stars": 52,
+      "forks": 8,
+      "category": "media",
+      "lastUpdate": "2026-02-10T09:36:51Z",
+      "platform": "x86"
+    }
+  ],
+  "lastUpdated": "2026-03-01T07:29:06.093175Z"
+}
