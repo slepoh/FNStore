@@ -1,0 +1,44 @@
+{
+  "apps": [
+    {
+      "id": "lunatv",
+      "name": "LunaTV",
+      "repository": "https://github.com/yuexps/lunatv-fnos"
+    },
+    {
+      "id": "reader",
+      "name": "Reader",
+      "repository": "https://github.com/yuexps/reader-fnos"
+    },
+    {
+      "id": "read",
+      "name": "轻阅读",
+      "repository": "https://github.com/UCKETX/qreader-fnos"
+    },
+    {
+      "id": "moviepilot",
+      "name": "MoviePilot",
+      "repository": "https://github.com/UCKETX/moviepilot"
+    },
+    {
+      "id": "lunatv-enhanced",
+      "name": "LunaTV Enhanced",
+      "repository": "https://github.com/yuexps/lunatv-enhanced-fnos"
+    },
+    {
+      "id": "iventoy",
+      "name": "iVentoy",
+      "repository": "https://github.com/UCKETX/iventoy"
+    },
+    {
+      "id": "omnibox",
+      "name": "OmniBox",
+      "repository": "https://github.com/UCKETX/omnibox"
+    },
+    {
+      "id": "2fmusic",
+      "name": "2FMusic",
+      "repository": "https://github.com/yuexps/2FMusic"
+    }
+  ]
+}
