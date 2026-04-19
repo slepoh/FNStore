@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="APP Store - 为 FNOS 生态打造的第三方中心化应用仓库，自动收录和更新丰富第三方应用包，清晰检索，便捷下载。">
+    <meta name="keywords" content="APP Store, FNOS, 飞牛, 第三方应用, 应用仓库, 下载">
+    <meta name="robots" content="index, follow">
+    <title>APP Store - FNOS 第三方应用仓库</title>
+    <link rel="icon" type="image/png" href="Logo.png">
+    <link rel="apple-touch-icon" href="Logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            document.documentElement.classList.add('sidebar-collapsed');
+        }
+    </script>
+</head>
+<body>
+    <div class="miuix-app">
+        <!-- 顶部导航栏 -->
+        <header class="miuix-topbar">
+            <div class="miuix-topbar-brand">
+                <!-- 菜单按钮 -->
+                <button id="menu-toggle" class="miuix-brand-button" title="切换侧边栏">
+                    <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                    <span class="brand-title">2FStore</span>
+                </button>
+            </div>
+            <div class="miuix-topbar-actions">
+                <div class="miuix-search">
+                    <input type="text" id="search-input" placeholder="搜索应用..." class="miuix-search-input">
+                    <button id="search-btn" class="miuix-icon-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                </div>
+                <!-- 提交应用按钮 -->
+                <button id="submit-app-btn" class="miuix-topbar-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12h14"></path>
+                    </svg>
+                    <span>提交应用</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="miuix-content">
+            <!-- 侧边栏 - 移动端优化版 -->
+            <aside class="miuix-sidebar">
+                <!-- 移动端控制按钮 -->
+                <div class="mobile-sidebar-control">
+                    <button id="sidebar-toggle-btn" class="miuix-button miuix-button-text mobile-sidebar-toggle">
+                        <svg class="toggle-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                        <span>筛选与排序</span>
+                    </button>
+                </div>
+                
+                <!-- 移动端卡片容器 -->
+                <div class="mobile-sidebar-cards">
+                    <div class="miuix-card">
+                        <div class="miuix-card-header">
+                            <h3 class="miuix-card-title">分类</h3>
+                        </div>
+                        <div class="miuix-card-content">
+                            <ul id="category-list" class="miuix-list">
+                                <li class="miuix-list-item active" data-category="all">
+                                    <span class="miuix-list-item-text">全部</span>
+                                </li>
+                                <li class="miuix-list-item" data-category="uncategorized">
+                                    <span class="miuix-list-item-text">未分类</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="miuix-card">
+                        <div class="miuix-card-header">
+                            <h3 class="miuix-card-title">排序</h3>
+                        </div>
+                        <div class="miuix-card-content">
+                            <select id="sort-select" class="miuix-select">
+                                <option value="name">按名称</option>
+                                <option value="stars">按星标数</option>
+                                <option value="updated">按更新时间</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="miuix-card">
+                        <div class="miuix-card-header">
+                            <h3 class="miuix-card-title">GitHub加速</h3>
+                        </div>
+                        <div class="miuix-card-content">
+                            <select id="proxy-select" class="miuix-select">
+                                <!-- 选项由 JS 动态生成 -->
+                            </select>
+                            <div id="custom-proxy-container" class="miuix-form-field hidden" style="margin-top: 12px;">
+                                <input type="text" id="custom-proxy-input" class="miuix-input" placeholder="https://your-proxy.com/">
+                            </div>
+                            <div class="miuix-form-help">加速资源下载与加载</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 内容区域 -->
+            <section class="miuix-main">
+                <!-- 应用统计 -->
+                <div id="app-stats" class="app-stats">
+                    <span id="app-count">加载中...</span>
+                </div>
+                
+                <!-- 应用列表 -->
+                <div id="app-list" class="miuix-grid">
+                    <!-- 应用列表将通过JavaScript动态生成 -->
+                </div>
+
+                <!-- 分页导航 -->
+                <div id="pagination" class="pagination"></div>
+                
+                <!-- 应用详情 -->
+                <div id="app-detail" class="miuix-card hidden">
+                    <div class="miuix-card-header">
+                        <button id="back-btn" class="miuix-button miuix-button-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m15 18-6-6 6-6"/>
+                            </svg>
+                            返回列表
+                        </button>
+                    </div>
+                    <div class="miuix-card-content" id="app-detail-content">
+                        <!-- 应用详情将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 页脚 -->
+                <footer class="site-footer">
+                    <div class="footer-content">
+                        <span class="footer-disclaimer">
+                            注意：本项目为社区驱动，与 fnOS 官方无关 · 不对第三方应用的安全性负责 · 使用风险自负
+                        </span>
+                    </div>
+                </footer>
+            </section>
+        </main>
+    </div>
+
+    <!-- 提交应用模态框 -->
+    <div id="submit-modal" class="miuix-modal hidden">
+        <div class="miuix-modal-dialog">
+            <div class="miuix-modal-header">
+                <h2 class="miuix-modal-title">提交应用</h2>
+                <button class="miuix-modal-close">&times;</button>
+            </div>
+            <div class="miuix-modal-body">
+                <p>选择您的应用格式，通过 Issue 提交应用：</p>
+                
+                <div class="submit-option">
+                    <h4>APPStore 应用</h4>
+                    <p>符合 <a href="https://github.com/slepoh/FNStore" target="_blank">2FStore 规范</a>，独立仓库应用(标准FNOS应用结构)</p>
+                    <a href="https://github.com/slepoh/FNStore/issues/new?template=app-submission.yml" target="_blank" class="miuix-button miuix-button-outline">提交 APPStore 应用</a>
+                </div>
+                
+                <div class="submit-option">
+                    <h4>FnDepot 应用</h4>
+                    <p>符合 <a href="https://github.com/EWEDLCM/FnDepot" target="_blank">FnDepot 规范</a>，支持一个仓库多个应用</p>
+                    <a href="https://github.com/slepoh/APPStore/issues/new?template=fnpack-submission.yml" target="_blank" class="miuix-button miuix-button-outline">提交 FnDepot 应用</a>
+                </div>
+            </div>
+            <div class="miuix-modal-footer">
+                <a href="https://github.com/slepoh/FNStore/issues" target="_blank" class="miuix-button miuix-button-text">查看所有 Issues</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    
+</body>
+</html>
