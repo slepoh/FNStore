@@ -1,8 +1,8 @@
 // ============ 本地调试 ============
 const TEST_MODE = false; // 设为 true 从 GitHub 远程获取数据，false 使用本地数据
-const TEST_DATA_URL = 'https://raw.githubusercontent.com/yuexps/2FStore/refs/heads/main/data/app_details.json';
-const TEST_FNPACK_URL = 'https://raw.githubusercontent.com/yuexps/2FStore/refs/heads/main/data/fnpack_details.json';
-const TEST_VERSION_URL = 'https://raw.githubusercontent.com/yuexps/2FStore/refs/heads/main/data/version.json';
+const TEST_DATA_URL = 'https://raw.githubusercontent.com/slepoh/FNStore/refs/heads/main/data/app_details.json';
+const TEST_FNPACK_URL = 'https://raw.githubusercontent.com/slepoh/FNStore/refs/heads/main/data/fnpack_details.json';
+const TEST_VERSION_URL = 'https://raw.githubusercontent.com/slepoh/FNStore/refs/heads/main/data/version.json';
 
 // GitHub 代理地址列表
 const PROXY_OPTIONS = [
